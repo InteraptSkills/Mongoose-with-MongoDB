@@ -243,7 +243,7 @@ We first removed any existing data from our database and then we inserted and sa
 
 ### Check out the data!
 
-In your termianl type `mongo`. This initiates MongoDB.
+In your terminal type `mongo`. This initiates MongoDB.
 
 If we want to see a list of all our database type `show dbs`
 
