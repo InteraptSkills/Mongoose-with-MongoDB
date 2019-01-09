@@ -187,7 +187,7 @@ mongoose.connect(process.env.MONGODB_URI)
 ```
 This asynchronous function allows us to connect to our databse and informs us if soemthing goes wrong. A asynchronous function is a function which operates asynchronously via the event loop, using an implicit Promise to return its result. It doesn't block the calling thread while waiting for a reply. Instead, the calling thread is notified when the reply arrives.
 
-Next up, let's insert some dummy data
+Next up, let's insert some dummy data:
 ```const project1 = new ProjectModel({
     projectName: 'Project3',
     unit: 'Mongoose',
@@ -201,4 +201,28 @@ const student1 = new StudentModel({
     gradeAverage: 'B',
     projects: [project1, project2]
 })
+const student2 = new StudentModel({
+   name: 'Valencia',
+    gradeAverage: 'B',
+    projects: [project1, project2]
+})
 ```
+
+### Your Turn!
+
+Create two more students each with two projects.
+
+<br />
+
+Next, let's save this data to our database.
+
+`
+const projects = [project1, project2]
+const students= [student1]
+
+StudentModel.remove()
+    .then(() => ProjectModel.remove())
+     .then(() => StudenttModel.insertMany(stduents))
+    .then(() => ProjectModel.insertMany(projects))
+    .then(() => mongoose.connection.close())
+`
