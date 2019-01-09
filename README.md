@@ -150,14 +150,56 @@ Here we have actually named our database "students". Mongo does not require that
   `
  var StudentSchema = new Schema({
   name: String,
-  age: Number,
+  gradeAverage: Number,
   projects: [ProjectSchema]
 });
+`
+and one last thing, we need to export these schema's for later use
+`
+const ProjectModel = mongoose.model('Project', Projectschema)
+
+const StudentModel = mongoose.model('Student', StudentSchema)
+module.exports = { ProjectModel, StudentModel } 
 `
 In this example, we are establishing the structure of both the project and student documents within our collection. We are also establishing a one-to-many relationship between the two. Since, each student can have mulitple projects. Due to this relationship, we are embedding the Project document into the Student document as shown in the example above. 
 
 
 [Embedded Documents](http://mongoosejs.com/docs/2.7.x/docs/embedded-documents.html)
+<br />
 
+Now, go into to your seeds file. Here we will populate the database. First, we need to require Mongoose and connect to our database.
 
+This allows us to have a connection to our student database.
+`
+var db = mongoose.connection;
+const mongoose = require('mongoose')
+mongoose.connect('mongodb://localhost/students')
+`
 
+Now let's connect!
+`
+mongoose.connect(process.env.MONGODB_URI)
+    .then(() => {
+        console.log('connected to mongoDB')
+    })
+    .catch((err) => {
+        console.log('ERROR', err)
+    })
+`
+This asynchronous function allows us to connect to our databse and informs us if soemthing goes wrong. A asynchronous function is a function which operates asynchronously via the event loop, using an implicit Promise to return its result. It doesn't block the calling thread while waiting for a reply. Instead, the calling thread is notified when the reply arrives.
+
+Next up, let's insert some dummy data
+`
+const project1 = new ProjectModel({
+    projectName: 'Project3',
+    unit: 'Mongoose',
+})
+const project1 = new ProjectModel({
+    projectName: 'Project3',
+    unit: 'Mongoose',
+})
+const student1 = new StudentModel({
+   name: 'Devan',
+    gradeAverage: 'B',
+    projects: [project1, project2]
+})
