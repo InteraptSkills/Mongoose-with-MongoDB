@@ -95,8 +95,8 @@ However, it is more common to allow MongoDB to create it implicitly for us, usin
 
 <br />
 
-## Time to Code Along!
-### Let's Set Up Mongoose & Create an App 
+## Time to Code Along!Let's Set Up Mongoose & Create an App 
+### Step 1: Set up Mongoose
 
 1. Create a new project folder on your Desktop folder: `$ mkdir mongoose-intro-lesson`
 
@@ -110,7 +110,7 @@ However, it is more common to allow MongoDB to create it implicitly for us, usin
 
 6. Create a new database directory inside that folder: `$ mkdir db`
 
-7. Create the following files: `$ db/schema.js db/seeds.js` 
+7. Create the following files: `$ touch gitignore db/schema.js db/seeds.js` 
 
 5. Open the app in VSCode: `$ code .`
 
@@ -122,5 +122,42 @@ Your folder structure should look like this:
 6. Install Mongoose `$ npm install mongoose`
 
 <br />
+
+### Step 2:Require Mongoose & Establish connection
+
+Now that we have installed Mongoose we will need to require it within our app in order to have access to it. Require Mongoose within your schema file.
+`var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/students');
+`
+Here we have actually named our database "students". Mongo does not require that the database already exist, it will create it once try to save something. 
+
+<br />
+ ## What's a Schema?
+ 
+ A schema is like a template for our database. It ensures that each time we save items to our database they have the same attributes and structure.
+ 
+ ### Step 4: Set up our Student & Project Schema's
+  
+  Let's create an object named Project and defines it's attributes.
+  
+  `
+  var ProjectSchema = new Schema({
+  title: String,
+  unit: String
+});
+  `
+  and let's do the same for our Student Schema
+  `
+ var StudentSchema = new Schema({
+  name: String,
+  age: Number,
+  projects: [ProjectSchema]
+});
+`
+In this example, we are establishing the structure of both the project and student documents within our collection. We are also establishing a one-to-many relationship between the two. Since, each student can have mulitple projects. Due to this relationship, we are embedding the Project document into the Student document as shown in the example above. 
+
+
+[Embedded Documents](http://mongoosejs.com/docs/2.7.x/docs/embedded-documents.html)
+
 
 
