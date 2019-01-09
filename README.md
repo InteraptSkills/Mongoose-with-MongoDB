@@ -117,7 +117,7 @@ However, it is more common to allow MongoDB to create it implicitly for us, usin
 
 Your folder structure should look like this:
 
-![](https://i.imgur.com/Mc52tFo.png)
+![](https://imgur.com/v3dL2LW)
 
 6. Install Mongoose `$ npm install mongoose`
 
