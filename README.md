@@ -170,10 +170,10 @@ In this example, we are establishing the structure of both the project and stude
 Now, go into to your seeds file. Here we will populate the database. First, we need to require Mongoose and connect to our database.
 
 This allows us to have a connection to our student database.
-`var db = mongoose.connection;
+```var db = mongoose.connection;
 const mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/students')
-`
+```
 
 Now let's connect!
 ```
