@@ -121,7 +121,9 @@ Your folder structure should look like this:
 
 6. Install Mongoose `$ npm install mongoose`
 
-7. Go into your dotenv and add the path to the database `MONGODB_URI=mongodb://localhost/students`
+7.  npm install dotenv
+
+8. Go into your dotenv and add the path to the database `MONGODB_URI=mongodb://localhost/students`
 
 <br />
 
@@ -237,3 +239,14 @@ StudentModel.remove()
 ```
 We first removed any existing data from our database and then we inserted and saved this new data. Now run your seeds file!
 ` node seeds.js`
+<br />
+
+### Check out the data!
+
+In your termianl type `mongo`. This initiates MongoDB.
+
+If we want to see a list of all our database type `show dbs`
+
+Once you locate your db type `use students`
+
+To see all the documents within the students collection type `db.students.find()`
