@@ -218,7 +218,7 @@ Next, let's save this data to our database.
 
 `
 const projects = [project1, project2]
-const students= [student1]
+const students= [student1, student2]
 
 StudentModel.remove()
     .then(() => ProjectModel.remove())
@@ -226,3 +226,4 @@ StudentModel.remove()
     .then(() => ProjectModel.insertMany(projects))
     .then(() => mongoose.connection.close())
 `
+We first removed any existing data from our database and then we inserted and saved this new data.
