@@ -170,15 +170,14 @@ In this example, we are establishing the structure of both the project and stude
 Now, go into to your seeds file. Here we will populate the database. First, we need to require Mongoose and connect to our database.
 
 This allows us to have a connection to our student database.
-`
-var db = mongoose.connection;
+`var db = mongoose.connection;
 const mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/students')
 `
 
 Now let's connect!
 `
-mongoose.connect(process.env.MONGODB_URI)
+ongoose.connect(process.env.MONGODB_URI)
     .then(() => {
         console.log('connected to mongoDB')
     })
@@ -189,8 +188,7 @@ mongoose.connect(process.env.MONGODB_URI)
 This asynchronous function allows us to connect to our databse and informs us if soemthing goes wrong. A asynchronous function is a function which operates asynchronously via the event loop, using an implicit Promise to return its result. It doesn't block the calling thread while waiting for a reply. Instead, the calling thread is notified when the reply arrives.
 
 Next up, let's insert some dummy data
-`
-const project1 = new ProjectModel({
+`const project1 = new ProjectModel({
     projectName: 'Project3',
     unit: 'Mongoose',
 })
