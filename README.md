@@ -110,7 +110,7 @@ However, it is more common to allow MongoDB to create it implicitly for us, usin
 
 6. Create a new database directory inside that folder: `$ mkdir db`
 
-7. Create the following files: `$ touch gitignore db/schema.js db/seeds.js` 
+7. Create the following files: `$ touch gitignore  dotenv db/schema.js db/seeds.js` 
 
 5. Open the app in VSCode: `$ code .`
 
@@ -121,14 +121,23 @@ Your folder structure should look like this:
 
 6. Install Mongoose `$ npm install mongoose`
 
+7. Go into your dotenv and add the path to the database `MONGODB_URI=mongodb://localhost/students`
+
 <br />
 
 ### Step 2:Require Mongoose & Establish connection
 
+First, we need to require our databse in our app.js. We need to also require our dotenv file which has the path our database.  
+```
+require('dotenv').config();
+const mongoose = require('mongoose');
+mongoose.connect(process.env.MONGODB_URI); 
+```
 Now that we have installed Mongoose we will need to require it within our app in order to have access to it. Require Mongoose within your schema file.
-`var mongoose = require('mongoose');
+
+```var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/students');
-`
+```
 Here we have actually named our database "students". Mongo does not require that the database already exist, it will create it once try to save something. 
 
 <br />
@@ -216,14 +225,15 @@ Create two more students each with two projects.
 
 Next, let's save this data to our database.
 
-`
+```
 const projects = [project1, project2]
 const students= [student1, student2]
 
 StudentModel.remove()
-    .then(() => ProjectModel.remove())
+    .then(() => ProjectModel.deleteMany())
      .then(() => StudenttModel.insertMany(stduents))
     .then(() => ProjectModel.insertMany(projects))
-    .then(() => mongoose.connection.close())
-`
-We first removed any existing data from our database and then we inserted and saved this new data.
+    .then(() => db.close())
+```
+We first removed any existing data from our database and then we inserted and saved this new data. Now run your seeds file!
+` node seeds.js`
