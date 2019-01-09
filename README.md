@@ -105,6 +105,7 @@ However, it is more common to allow MongoDB to create it implicitly for us, usin
 3. Set up Express using the Express Generator `npm install express-generator -g`
 
 4. Set the app name and the view engine for express `express --view=pug myapp`
+- cd into myapp
 
 5. `$ npm init -y`
 
