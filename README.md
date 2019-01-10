@@ -122,6 +122,8 @@ Your folder structure should look like this:
 
 6. Install Mongoose `$ npm install mongoose`
 
+7. Install MongoDB `npm install mongodb`
+
 7.  npm install dotenv
 
 8. Go into your dotenv and add the path to the database `MONGODB_URI=mongodb://localhost/students`
@@ -136,10 +138,10 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGODB_URI); 
 ```
-Now that we have installed Mongoose we will need to require it within our app in order to have access to it. Require Mongoose within your schema file.
+We need to require Mongoose as well as import `Schema` from Mongoose in our Schema file. 
 
 ```var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/students');
+const Schema = mongoose.Schema
 ```
 Here we have actually named our database "students". Mongo does not require that the database already exist, it will create it once try to save something. 
 
@@ -168,7 +170,7 @@ Here we have actually named our database "students". Mongo does not require that
 ```
 and one last thing, we need to export these schema's for later use
 ```
-const ProjectModel = mongoose.model('Project', Projectschema)
+const ProjectModel = mongoose.model('Project', ProjectSchema)
 
 const StudentModel = mongoose.model('Student', StudentSchema)
 module.exports = { ProjectModel, StudentModel } 
@@ -182,10 +184,11 @@ In this example, we are establishing the structure of both the project and stude
 Now, go into to your seeds file. Here we will populate the database. First, we need to require Mongoose and connect to our database.
 
 This allows us to have a connection to our student database.
-```var db = mongoose.connection;
-const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost/students')
 ```
+const mongoose = require('mongoose')
+mongoose.connect('process.env.MONGODB_URI')
+```
+
 
 Now let's connect!
 ```
