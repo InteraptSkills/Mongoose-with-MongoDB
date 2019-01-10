@@ -303,6 +303,9 @@ Your results should look something like this
  
  We will set up our routes now and test them in Postman. If you don't have Postman yet, follow this [link]https://www.getpostman.com/ to download. 
   
+  Before we start testing, install nodemon. Then, add this to your pacakage.json file
+  `
+   "start": "nodemon ./bin/www"`
   
  Next, we need to let Express know where to grab our routes. Inside of your `app.js` please add
  ```
