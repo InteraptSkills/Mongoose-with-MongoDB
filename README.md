@@ -377,4 +377,23 @@ router.delete('/:studentId', (request, response) => {
     })
 })
 ```
+Now let's move on to our embedded route Projects. First we need to add the following:
+```
+var express = require('express');
+const router = express.Router({ mergeParams: true })
+const { StudentModel } = require('../db/schema')
+const { ProjectModel } = require('../db/schema.js')
+```
+Since this is an embedded route we need to require the Student student and allow access to the params from the route(i.e. the studentId)
 
+get route
+```
+//get route
+router.get('/:projectId', function (req, res, next) {
+    projectId = req.params.projectId
+    StudentModel.findById(req.params.studentId).then((student) => {
+            res.send(student.projects.id(projectId))
+    })
+    
+});
+```
