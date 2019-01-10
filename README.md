@@ -56,7 +56,7 @@ Check out this [link](https://docs.mongodb.com/manual/reference/command/) to lea
     name: { first: "Homer", last: "Simpson" },
     birth: new Date('Jun 23, 1912'),
     grade: "A"
-    class: "Web Development
+    class: "Web Development"
 }
 ```
 Looks just like a JSON object!
@@ -124,9 +124,13 @@ Your folder structure should look like this:
 
 7. Install MongoDB `npm install mongodb`
 
-7.  npm install dotenv
+8. npm install dotenv
 
-8. Go into your dotenv and add the path to the database `MONGODB_URI=mongodb://localhost/students`
+9. npm install pug
+
+10. Go into your dotenv and add the path to the database `MONGODB_URI=mongodb://localhost/students`
+
+11. Go into your `.gitignore` file and add `node_modules/
 
 <br />
 
@@ -183,13 +187,18 @@ In this example, we are establishing the structure of both the project and stude
 
 Now, go into to your seeds file. Here we will populate the database. First, we need to require Mongoose and connect to our database.
 
-This allows us to have a connection to our student database.
+This allows us to have a connection to our student database. Since we stored the path to our databse within our `.env` file we will also need to require it as well. 
 ```
+require('dotenv').config();
 const mongoose = require('mongoose')
 mongoose.connect('process.env.MONGODB_URI')
 ```
+...and then we require our Student & Project Schema's
+```
+const {ProjectModel} = require('./schema')
+const {StudentModel} = require('./schema')
 
-
+```
 Now let's connect!
 ```
 mongoose.connect(process.env.MONGODB_URI)
@@ -213,12 +222,12 @@ const project1 = new ProjectModel({
 })
 const student1 = new StudentModel({
    name: 'Devan',
-    gradeAverage: 'B',
+    gradeAverage: '87',
     projects: [project1, project2]
 })
 const student2 = new StudentModel({
    name: 'Valencia',
-    gradeAverage: 'B',
+    gradeAverage: '89',
     projects: [project1, project2]
 })
 ```
@@ -235,11 +244,11 @@ Next, let's save this data to our database.
 const projects = [project1, project2]
 const students= [student1, student2]
 
-StudentModel.remove()
+StudentModel.deleteMany()
     .then(() => ProjectModel.deleteMany())
-     .then(() => StudenttModel.insertMany(stduents))
+     .then(() => StudenttModel.insertMany(students))
     .then(() => ProjectModel.insertMany(projects))
-    .then(() => db.close())
+    .then(() => mongoose.connection.close())
 ```
 We first removed any existing data from our database and then we inserted and saved this new data. Now run your seeds file!
 ` node seeds.js`
@@ -254,3 +263,24 @@ If we want to see a list of all our database type `show dbs`
 Once you locate your db type `use students`
 
 To see all the documents within the students collection type `db.students.find()`
+
+Your results should look something like this
+```
+ "_id" : ObjectId("5c3641a706dfefd94bf2eda7"), "name" : "Devan", "gradeAverage" : "B", "projects" : [ { "_id" : ObjectId("5c3641a706dfefd94bf2eda5"), "title" : "Project3", "unit" : "Mongoose" }
+ ```
+ We can add .pretty() to the end of this statement to format the data.
+ ```
+ db.students.find().pretty()
+ 
+ => {
+        "_id" : ObjectId("5c3641a706dfefd94bf2eda7"),
+        "name" : "Devan",
+        "gradeAverage" : "B",
+        "projects" : [
+                {
+                        "_id" : ObjectId("5c3641a706dfefd94bf2eda5"),
+                        "title" : "Project3",
+                        "unit" : "Mongoose"
+                },
+                ```
+
