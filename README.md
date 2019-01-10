@@ -122,7 +122,7 @@ Your folder structure should look like this:
 
 6. Install Mongoose `$ npm install mongoose`
 
-7. Install MongoDB `npm install mongodb`
+7. Install MongoDB `brew install mongo` or `brew reinstall mongo` and then `brew services start mongo`
 
 8. npm install dotenv
 
@@ -187,12 +187,15 @@ In this example, we are establishing the structure of both the project and stude
 
 Now, go into to your seeds file. Here we will populate the database. First, we need to require Mongoose and connect to our database.
 
-This allows us to have a connection to our student database. Since we stored the path to our databse within our `.env` file we will also need to require it as well. 
+This allows us to have a connection to our student database.
 ```
 require('dotenv').config();
+const Schema = mongoose.Schema
 const mongoose = require('mongoose')
 mongoose.connect('process.env.MONGODB_URI')
 ```
+ Since we stored the path to our databse within our `.env` file we will also need to require it as well. We will also require Schema from Mongoose.
+ 
 ...and then we require our Student & Project Schema's
 ```
 const {ProjectModel} = require('./schema')
@@ -269,6 +272,8 @@ Your results should look something like this
  "_id" : ObjectId("5c3641a706dfefd94bf2eda7"), "name" : "Devan", "gradeAverage" : "B", "projects" : [ { "_id" : ObjectId("5c3641a706dfefd94bf2eda5"), "title" : "Project3", "unit" : "Mongoose" }
  ```
  We can add .pretty() to the end of this statement to format the data.
+ 
+
  ```
  db.students.find().pretty()
  
@@ -282,5 +287,50 @@ Your results should look something like this
                         "title" : "Project3",
                         "unit" : "Mongoose"
                 },
-                ```
+```
+<br />
+
+## Your turn!
+
+
+ Follow this [link]https://mongoosejs.com/docs/queries.html to access more Mongoose queries. Work with a partner and use at least 3 different queries in your database.
+ 
+ <br />
+ 
+ ## CRUD with Mongoose
+ 
+ The Express generator already a ` routes` folder for us so let's go inside and create a file to hold our routes for Students & Projects. 
+ 
+ We will set up our routes now and test them in Postman. If you don't have Postman yet, follow this [link]https://www.getpostman.com/ to download. 
+  
+  
+ Next, we need to let Express know where to grab our routes. Inside of your `app.js` please add
+ ```
+ var projectsRouter = require('./routes/projects')
+ var studentsRouter = require('./routes/students')
+ ```
+ Students Get Route
+ 
+ ```
+ const express = require('express')
+const router = express.Router()
+
+const Schema = require("../db/schema.js")
+const { StudentModel } = require('../db/schema')
+const { ProjectModel } = require('../db/schema')
+
+router.get('/', (request, response) => {
+  StudentModel.find({})
+    .then((students) => {
+      response.render('students/index.pug', { 
+        students: students
+      })
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+})
+
+module.exports = router
+```
 
