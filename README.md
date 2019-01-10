@@ -309,20 +309,18 @@ Your results should look something like this
  var projectsRouter = require('./routes/projects')
  var studentsRouter = require('./routes/students')
  ```
+ 
+ this tells express where to grab your routes from.
+ 
+ Within your routes/students.js file add these routes
+ 
  Students Get Route
  
  ```
- const express = require('express')
-const router = express.Router()
-
-const Schema = require("../db/schema.js")
-const { StudentModel } = require('../db/schema')
-const { ProjectModel } = require('../db/schema')
-
 router.get('/', (request, response) => {
   StudentModel.find({})
     .then((students) => {
-      response.render('students/index.pug', { 
+      response.send({ 
         students: students
       })
     })
@@ -332,5 +330,51 @@ router.get('/', (request, response) => {
 })
 
 module.exports = router
+```
+show route
+
+```
+router.get('/:id', (request, response) => {
+  const id = request.params.id
+
+  StudentModel.findById(id)
+    .then((student) => {
+      response.send({
+        student: student
+      })
+    })
+})
+```
+
+update route
+
+```
+router.put('/:studentId', (request, response) => {
+  const studentId = request.params.id
+  const updatedStudent = request.body
+
+  StudentModel.findOneAndUpdate(studentId, updatedStudent, {new: true})
+    .then((student) => {
+      console.log(`${student.name} updated!`)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+})
+```
+
+delete route
+```
+router.delete('/:studentId', (request, response) => {
+  const studentId = request.params.studentId
+
+  StudentModel.findOneAndDelete(studentId)
+    .then(() => {
+      console.log('student deleted')
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+})
 ```
 
