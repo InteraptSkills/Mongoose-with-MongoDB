@@ -293,7 +293,7 @@ Your results should look something like this
 ## Your turn!
 
 
- Follow this [link]https://mongoosejs.com/docs/queries.html to access more Mongoose queries. Work with a partner and use at least 3 different queries in your database.
+ Follow this [link](https://mongoosejs.com/docs/queries.html) to access more Mongoose queries. Work with a partner and use at least 3 different queries in your database.
  
  <br />
  
