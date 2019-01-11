@@ -443,3 +443,30 @@ router.delete('/:id', (req, res) => {
   
   })
   ```
+### Validations
+
+We can add validations to our schema to ensure that data is entered correctly before it can be saved into ur database. 
+
+```
+var StudentSchema = new Schema({
+  name: {
+    type: String,
+    unique: true,
+    required: true
+  },
+  age: Number,
+  email: {
+    type: String,
+    match: /.+\@.+\..+/
+  }
+});
+```
+Read more on validations [here](https://mongoosejs.com/docs/validation.html)
+
+## You do!
+
+Now that we have the basics covered. You should now do the following:
+- Add validations to your Student & Project Models
+- Add at least four more students & projects to your seeds file.
+- Render the data in a pug file & design the app
+- Test out the CRUD functionality 
