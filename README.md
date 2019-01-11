@@ -343,6 +343,18 @@ router.get('/', (request, response) => {
 
 module.exports = router
 ```
+
+post route
+
+```
+  //create route
+  router.post('/', (req,res)=>{
+    const newStudent = new StudentModel(req.body)
+    newStudent.save().then((student)=>{
+        res.send(student)
+    })
+})
+```
 show route
 
 ```
@@ -409,6 +421,22 @@ router.get('/:projectId', function (req, res, next) {
     })
     
 });
+```
+
+post route
+```
+router.post('/', (req, res) => {
+  StudentModel.findById(req.params.studentId).then((student) => {
+      const newProject = new ProjectModel(req.body)
+      
+      student.projects.push(newProject)
+      console.log(newProject)
+      student.save().then((student)=>{
+          res.send(student.projects)
+      })
+  })
+
+})
 ```
 update route
 ```
