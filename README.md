@@ -249,7 +249,7 @@ const students= [student1, student2]
 
 StudentModel.deleteMany()
     .then(() => ProjectModel.deleteMany())
-     .then(() => StudenttModel.insertMany(students))
+     .then(() => StudentModel.insertMany(students))
     .then(() => ProjectModel.insertMany(projects))
     .then(() => mongoose.connection.close())
 ```
@@ -299,9 +299,9 @@ Your results should look something like this
  
  ## CRUD with Mongoose
  
- The Express generator already a ` routes` folder for us so let's go inside and create a file to hold our routes for Students & Projects. 
+ The Express generator already provided us with ` routes` folder for us so let's go inside and create a file to hold our routes for Students & Projects. 
  
- We will set up our routes now and test them in Postman. If you don't have Postman yet, follow this [link]https://www.getpostman.com/ to download. 
+ We will set up our routes now and test them in Postman. If you don't have Postman yet, follow this [link](https://www.getpostman.com/) to download. 
   
   Before we start testing, install nodemon. Then, add this to your pacakage.json file
   `
