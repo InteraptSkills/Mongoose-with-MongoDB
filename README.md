@@ -126,9 +126,9 @@ Your folder structure should look like this:
 
 8. npm install dotenv
 
-9. npm install pug
+9. npm install nodemon
 
-10. Go into your dotenv and add the path to the database `MONGODB_URI=mongodb://localhost/students`
+10. Go into your .env and add the path to the database `MONGODB_URI=mongodb://localhost/students`
 
 11. Go into your `.gitignore` file and add `node_modules/
 
@@ -187,7 +187,7 @@ In this example, we are establishing the structure of both the project and stude
 
 Now, go into to your seeds file. Here we will populate the database. First, we need to require Mongoose and connect to our database.
 
-This allows us to have a connection to our student database.
+This allows us to have a connection to our students database.
 ```
 require('dotenv').config();
 const Schema = mongoose.Schema
@@ -315,7 +315,16 @@ Your results should look something like this
  
  this tells express where to grab your routes from.
  
- Within your routes/students.js file add these routes
+ Within your routes/students.js file 
+
+ ```
+var express = require('express');
+const router = express.Router({ mergeParams: true })
+const { StudentModel } = require('../db/schema')
+const { ProjectModel } = require('../db/schema.js')
+```
+
+...and add these routes
  
  Students Get Route
  
@@ -337,10 +346,10 @@ module.exports = router
 show route
 
 ```
-router.get('/:id', (request, response) => {
-  const id = request.params.id
+router.get('/:studentId', (request, response) => {
+  const studentId = request.params.studentId
 
-  StudentModel.findById(id)
+  StudentModel.findById(studentId)
     .then((student) => {
       response.send({
         student: student
@@ -353,12 +362,13 @@ update route
 
 ```
 router.put('/:studentId', (request, response) => {
-  const studentId = request.params.id
+  const studentId = request.params.studentId
   const updatedStudent = request.body
-
-  StudentModel.findOneAndUpdate(studentId, updatedStudent, {new: true})
+  console.log(studentId)
+  StudentModel.findOneAndUpdate({_id:studentId}, updatedStudent, {new: true})
     .then((student) => {
       console.log(`${student.name} updated!`)
+      response.json(student)
     })
     .catch((error) => {
       console.log(error)
@@ -371,7 +381,7 @@ delete route
 router.delete('/:studentId', (request, response) => {
   const studentId = request.params.studentId
 
-  StudentModel.findOneAndDelete(studentId)
+  StudentModel.findOneAndDelete({_id:studentId})
     .then(() => {
       console.log('student deleted')
     })
